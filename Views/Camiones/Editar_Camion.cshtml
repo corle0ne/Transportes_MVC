@@ -1,0 +1,75 @@
+﻿@model DTO.Camiones_DTO
+
+@*indicamos a razor que utilizaremos un modelo especifico*@
+
+<h5>@ViewBag.Titulo</h5>
+
+@using (Html.BeginForm("Editar_Camion", "Camiones", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-12">
+
+             @Html.HiddenFor(model=>model.UrlFoto)
+             @Html.HiddenFor(model=>model.ID_Camion)
+
+
+
+            <div>
+                @Html.LabelFor(model => model.Matricula)
+                @Html.TextBoxFor(model => model.Matricula, new { @class = "form-control", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Matricula, null)
+
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Capacidad)
+                @Html.TextBoxFor(model => model.Capacidad, new { @class = "form-control", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Capacidad, null)
+
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Marca)
+                @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Marca, null)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Modelo)
+                @Html.TextBoxFor(model => model.Modelo, new { @class = "form-control", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Marca, null)
+
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Kilometraje)
+                @Html.TextBoxFor(model => model.Kilometraje, new { @class = "form-control", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Kilometraje, null)
+
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Disponibilidad)
+                @Html.CheckBoxFor(model => model.Disponibilidad)
+
+            </div>
+
+            @*//DDL CAMION*@
+
+            <div>
+                @Html.LabelFor(model => model.Tipo_Camion)
+                @Html.DropDownListFor(model => model.Tipo_Camion, new SelectList(ViewBag.ListaTipos, "Descripcion", "Descripcion"), new { @class = "form-control" })
+
+            </div>
+            @*imagen*@
+            <div>
+                @Html.LabelFor(model => model.UrlFoto)
+
+                <input type="file" name="imagen" id="imagen" />
+
+            </div>
+            @*boton guardar*@
+
+            <div style="text-align:right;">
+                <input value="Guardar" class="btn btn-success" type="submit" />
+            </div>
+        </div>
+    </div>
+}
+
+
