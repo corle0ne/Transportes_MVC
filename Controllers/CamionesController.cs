@@ -76,7 +76,7 @@ namespace Transportes_MVC.Controllers
 
                         if (imagen != null && imagen.ContentLength > 0)
                         {
-                            string filename=Path.GetFileName(imagen.FileName);
+                            string filename = Path.GetFileName(imagen.FileName);
                             string pathdir = Server.MapPath("~/Assets/Imagenes/Camiones/");
                             if (!Directory.Exists(pathdir))
                             {
@@ -90,6 +90,7 @@ namespace Transportes_MVC.Controllers
 
                             context.Camiones.Add(camion);
                             context.SaveChanges();
+                            SweetAlert("Camion agregado", $"Se agrego nuevo camion", NotificationType.success);
                             return RedirectToAction("Index");
                         }
                         else
@@ -127,25 +128,25 @@ namespace Transportes_MVC.Controllers
 
                     camion.Matricula = camion_aux.Matricula;
                     camion.Marca = camion_aux.Marca;
-                    camion.Modelo= camion_aux.Modelo;
+                    camion.Modelo = camion_aux.Modelo;
                     camion.Capacidad = camion_aux.Capacidad;
-                    camion.Kilometraje= camion_aux.Kilometraje;
-                    camion.Tipo_Camion= camion_aux.Tipo_Camion;
-                    camion.Disponibilidad= camion_aux.Disponibilidad;
-                    camion.UrlFoto= camion_aux.UrlFoto;
+                    camion.Kilometraje = camion_aux.Kilometraje;
+                    camion.Tipo_Camion = camion_aux.Tipo_Camion;
+                    camion.Disponibilidad = camion_aux.Disponibilidad;
+                    camion.UrlFoto = camion_aux.UrlFoto;
 
 
-                    camion=(from c in context.Camiones where c.ID_Camion== id select new Camiones_DTO()
+                    camion = (from c in context.Camiones where c.ID_Camion == id select new Camiones_DTO()
                     {
-                        ID_Camion=c.ID_Camion,
-                        Matricula=c.Matricula,
-                        Marca=c.Marca,
-                        Modelo=c.Modelo,
-                        Capacidad=c.Capacidad,
-                        Kilometraje=c.Kilometraje,
-                        Tipo_Camion=c.Tipo_Camion,
-                        Disponibilidad=c.Disponibilidad,
-                        UrlFoto=c.UrlFoto
+                        ID_Camion = c.ID_Camion,
+                        Matricula = c.Matricula,
+                        Marca = c.Marca,
+                        Modelo = c.Modelo,
+                        Capacidad = c.Capacidad,
+                        Kilometraje = c.Kilometraje,
+                        Tipo_Camion = c.Tipo_Camion,
+                        Disponibilidad = c.Disponibilidad,
+                        UrlFoto = c.UrlFoto
 
                     }).FirstOrDefault();
 
@@ -167,7 +168,6 @@ namespace Transportes_MVC.Controllers
             }
         }
 
-        //POST: EDITAR CAMION
 
         //POST: Editar_Camion
         [HttpPost]
@@ -293,6 +293,41 @@ namespace Transportes_MVC.Controllers
             }
         }
 
+        //GET ELIMINAR CAMION
+
+        public ActionResult Eliminar_Camion(int id)
+        {
+            try
+            {
+                using (TransportesEntities context = new TransportesEntities())
+                {
+                    var camion = context.Camiones.FirstOrDefault(x => x.ID_Camion == id);
+                    if (camion == null)
+                    {
+                        SweetAlert("No encontrado", $"No hemos encontrado el camion con el identificador {id}", NotificationType.info);
+                        return RedirectToAction("Index");
+
+                    }
+
+                    context.Camiones.Remove(camion);
+                    context.SaveChanges();
+                    SweetAlert("Eliminado", $"Camion eliminado con exito", NotificationType.success);
+                    return RedirectToAction("Index");
+                }
+            } catch (Exception ex)
+            {
+                SweetAlert("Oops..", $"Ha ocurrido un error: {ex.Message}", NotificationType.error);
+                return RedirectToAction("Index");
+            }
+        }
+
+        //POST ELIMINAR CAMION
+        public ActionResult Confirmar_Eliminar(int id)
+        {
+            SweetAlert_Eliminar(id);
+            return RedirectToAction("Index");
+        }
+
         #region Auxiliares
         private class Opciones
         {
@@ -310,6 +345,54 @@ namespace Transportes_MVC.Controllers
                 new Opciones () { Numero="3", Descripcion="Transporte"}
             };
             ViewBag.ListaTipos = lista_opciones;
+        }
+        #endregion
+
+        #region SweetAlert
+        private void SweetAlert(string title, string msg, NotificationType type)
+        {
+            var script = "<script languaje='javascript'> " +
+                          "Swal.fire({" +
+                          "title: '" + title + "'," +
+                          "text: '" + msg + "'," +
+                          "icon: '" + type + "'" +
+                          "});" +
+                          "</script>";
+
+            TempData["sweetalert"] = script;
+
+        }
+
+        private void SweetAlert_Eliminar(int id)
+        {
+            var script = "<script languaje='javascript'>" +
+                "Swal.fire({" +
+                "title: '¿Estás Seguro?'," +
+                "text: 'Estás apunto de Eliminar el Camión: " + id.ToString() + "'," +
+                "icon: 'info'," +
+                "showDenyButton: true," +
+                "showCancelButton: true," +
+                "confirmButtonText: 'Eliminar'," +
+                "denyButtonText: 'Cancelar'" +
+                "}).then((result) => {" +
+                "if (result.isConfirmed) {  " +
+                "window.location.href = '/Camiones/Eliminar_Camion/" + id + "';" +
+                "} else if (result.isDenied) {  " +
+                "Swal.fire('Se ha cancelado la operación','','info');" +
+                "}" +
+                "});" +
+                "</script>";
+
+            TempData["sweetalert"] = script;
+        }
+
+        public enum NotificationType
+        {
+            error,
+            success,
+            warning,
+            info,
+            question
         }
         #endregion
     }

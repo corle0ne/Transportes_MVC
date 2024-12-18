@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TransportesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bitacora_camiones">
+          <Key>
+            <PropertyRef Name="ID_Bitacora" />
+          </Key>
+          <Property Name="ID_Bitacora" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Camion" Type="int" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="Accion" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Camiones">
+          <Key>
+            <PropertyRef Name="ID_Camion" />
+          </Key>
+          <Property Name="ID_Camion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Matricula" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Tipo_Camion" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Marca" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Modelo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Capacidad" Type="int" Nullable="false" />
+          <Property Name="Kilometraje" Type="float" Nullable="false" />
+          <Property Name="UrlFoto" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Disponibilidad" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cargamentos">
+          <Key>
+            <PropertyRef Name="ID_Cargamento" />
+          </Key>
+          <Property Name="ID_Cargamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ruta_ID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Peso" Type="float" Nullable="false" />
+          <Property Name="Estatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Choferes">
+          <Key>
+            <PropertyRef Name="ID_Chofer" />
+          </Key>
+          <Property Name="ID_Chofer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido_Paterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido_Materno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="smalldatetime" Nullable="false" />
+          <Property Name="Licencia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UrlFoto" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Disponibilidad" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Direcciones">
+          <Key>
+            <PropertyRef Name="ID_Direccion" />
+          </Key>
+          <Property Name="ID_Direccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Colonia" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CP" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Transportes.dbo.Ejemplo' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Ejemplo">
+          <Property Name="ID_Ejemplo" Type="int" />
+          <Property Name="Nombre" Type="nchar" MaxLength="10" />
+        </EntityType>-->
+        <EntityType Name="prueba">
+          <Key>
+            <PropertyRef Name="id_prueba" />
+          </Key>
+          <Property Name="id_prueba" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Rutas">
+          <Key>
+            <PropertyRef Name="ID_Ruta" />
+          </Key>
+          <Property Name="ID_Ruta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Camion_ID" Type="int" Nullable="false" />
+          <Property Name="Distancia" Type="float" />
+          <Property Name="Fecha_salida" Type="datetime" />
+          <Property Name="Fecha_llegadaestimada" Type="datetime" />
+          <Property Name="Fecha_llegadareal" Type="datetime" />
+          <Property Name="Chofer_ID" Type="int" />
+          <Property Name="Direccionorigen_ID" Type="int" />
+          <Property Name="Direcciondestino_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Apellido_Paterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido_Materno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Edad" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Transportes.dbo.View_Rutas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Rutas">
+          <Key>
+            <PropertyRef Name="#" />
+            <PropertyRef Name="ID_Cargamento" />
+            <PropertyRef Name="cargamento" />
+            <PropertyRef Name="ID_Direccion_Origen" />
+            <PropertyRef Name="Origen" />
+            <PropertyRef Name="Estado_Origen" />
+            <PropertyRef Name="ID_Direccion_Destino" />
+            <PropertyRef Name="Destino" />
+            <PropertyRef Name="Estado_Destino" />
+            <PropertyRef Name="ID_Chofer" />
+            <PropertyRef Name="Chofer" />
+            <PropertyRef Name="ID_Camion" />
+            <PropertyRef Name="Camión" />
+          </Key>
+          <Property Name="#" Type="int" Nullable="false" />
+          <Property Name="ID_Cargamento" Type="int" Nullable="false" />
+          <Property Name="cargamento" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ID_Direccion_Origen" Type="int" Nullable="false" />
+          <Property Name="Origen" Type="varchar" MaxLength="555" Nullable="false" />
+          <Property Name="Estado_Origen" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID_Direccion_Destino" Type="int" Nullable="false" />
+          <Property Name="Destino" Type="varchar" MaxLength="555" Nullable="false" />
+          <Property Name="Estado_Destino" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID_Chofer" Type="int" Nullable="false" />
+          <Property Name="Chofer" Type="varchar" MaxLength="152" Nullable="false" />
+          <Property Name="ID_Camion" Type="int" Nullable="false" />
+          <Property Name="Camión" Type="varchar" MaxLength="88" Nullable="false" />
+          <Property Name="Salida" Type="datetime" />
+          <Property Name="LLegada Estimada" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Cargament__Ruta___5165187F">
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="1" />
+          <End Role="Cargamentos" Type="Self.Cargamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rutas">
+              <PropertyRef Name="ID_Ruta" />
+            </Principal>
+            <Dependent Role="Cargamentos">
+              <PropertyRef Name="Ruta_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Camion_ID__4E88ABD4">
+          <End Role="Camiones" Type="Self.Camiones" Multiplicity="1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camiones">
+              <PropertyRef Name="ID_Camion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Camion_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Chofer_ID__5441852A">
+          <End Role="Choferes" Type="Self.Choferes" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choferes">
+              <PropertyRef Name="ID_Chofer" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Chofer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Direccion__571DF1D5">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Direccionorigen_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Direccion__5812160E">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Direcciondestino_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TransportesModelStoreContainer">
+          <EntitySet Name="bitacora_camiones" EntityType="Self.bitacora_camiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Camiones" EntityType="Self.Camiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargamentos" EntityType="Self.Cargamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Choferes" EntityType="Self.Choferes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prueba" EntityType="Self.prueba" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rutas" EntityType="Self.Rutas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Rutas" EntityType="Self.View_Rutas" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Rutas].[#] AS [#], 
+    [View_Rutas].[ID_Cargamento] AS [ID_Cargamento], 
+    [View_Rutas].[cargamento] AS [cargamento], 
+    [View_Rutas].[ID_Direccion_Origen] AS [ID_Direccion_Origen], 
+    [View_Rutas].[Origen] AS [Origen], 
+    [View_Rutas].[Estado_Origen] AS [Estado_Origen], 
+    [View_Rutas].[ID_Direccion_Destino] AS [ID_Direccion_Destino], 
+    [View_Rutas].[Destino] AS [Destino], 
+    [View_Rutas].[Estado_Destino] AS [Estado_Destino], 
+    [View_Rutas].[ID_Chofer] AS [ID_Chofer], 
+    [View_Rutas].[Chofer] AS [Chofer], 
+    [View_Rutas].[ID_Camion] AS [ID_Camion], 
+    [View_Rutas].[Camión] AS [Camión], 
+    [View_Rutas].[Salida] AS [Salida], 
+    [View_Rutas].[LLegada Estimada] AS [LLegada Estimada]
+    FROM [dbo].[View_Rutas] AS [View_Rutas]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Cargament__Ruta___5165187F" Association="Self.FK__Cargament__Ruta___5165187F">
+            <End Role="Rutas" EntitySet="Rutas" />
+            <End Role="Cargamentos" EntitySet="Cargamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Camion_ID__4E88ABD4" Association="Self.FK__Rutas__Camion_ID__4E88ABD4">
+            <End Role="Camiones" EntitySet="Camiones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Chofer_ID__5441852A" Association="Self.FK__Rutas__Chofer_ID__5441852A">
+            <End Role="Choferes" EntitySet="Choferes" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Direccion__571DF1D5" Association="Self.FK__Rutas__Direccion__571DF1D5">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Direccion__5812160E" Association="Self.FK__Rutas__Direccion__5812160E">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TransportesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bitacora_camiones">
+          <Key>
+            <PropertyRef Name="ID_Bitacora" />
+          </Key>
+          <Property Name="ID_Bitacora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Camion" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="Accion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Camiones">
+          <Key>
+            <PropertyRef Name="ID_Camion" />
+          </Key>
+          <Property Name="ID_Camion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Matricula" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo_Camion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Marca" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Modelo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Capacidad" Type="Int32" Nullable="false" />
+          <Property Name="Kilometraje" Type="Double" Nullable="false" />
+          <Property Name="UrlFoto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Disponibilidad" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Rutas" Relationship="Self.FK__Rutas__Camion_ID__4E88ABD4" FromRole="Camiones" ToRole="Rutas" />
+        </EntityType>
+        <EntityType Name="Cargamentos">
+          <Key>
+            <PropertyRef Name="ID_Cargamento" />
+          </Key>
+          <Property Name="ID_Cargamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ruta_ID" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Peso" Type="Double" Nullable="false" />
+          <Property Name="Estatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rutas" Relationship="Self.FK__Cargament__Ruta___5165187F" FromRole="Cargamentos" ToRole="Rutas" />
+        </EntityType>
+        <EntityType Name="Choferes">
+          <Key>
+            <PropertyRef Name="ID_Chofer" />
+          </Key>
+          <Property Name="ID_Chofer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Paterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Materno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Licencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UrlFoto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Disponibilidad" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Rutas" Relationship="Self.FK__Rutas__Chofer_ID__5441852A" FromRole="Choferes" ToRole="Rutas" />
+        </EntityType>
+        <EntityType Name="Direcciones">
+          <Key>
+            <PropertyRef Name="ID_Direccion" />
+          </Key>
+          <Property Name="ID_Direccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Calle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Colonia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CP" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rutas" Relationship="Self.FK__Rutas__Direccion__571DF1D5" FromRole="Direcciones" ToRole="Rutas" />
+          <NavigationProperty Name="Rutas1" Relationship="Self.FK__Rutas__Direccion__5812160E" FromRole="Direcciones" ToRole="Rutas" />
+        </EntityType>
+        <EntityType Name="prueba">
+          <Key>
+            <PropertyRef Name="id_prueba" />
+          </Key>
+          <Property Name="id_prueba" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Rutas">
+          <Key>
+            <PropertyRef Name="ID_Ruta" />
+          </Key>
+          <Property Name="ID_Ruta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Camion_ID" Type="Int32" Nullable="false" />
+          <Property Name="Distancia" Type="Double" />
+          <Property Name="Fecha_salida" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_llegadaestimada" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_llegadareal" Type="DateTime" Precision="3" />
+          <Property Name="Chofer_ID" Type="Int32" />
+          <Property Name="Direccionorigen_ID" Type="Int32" />
+          <Property Name="Direcciondestino_ID" Type="Int32" />
+          <NavigationProperty Name="Camiones" Relationship="Self.FK__Rutas__Camion_ID__4E88ABD4" FromRole="Rutas" ToRole="Camiones" />
+          <NavigationProperty Name="Cargamentos" Relationship="Self.FK__Cargament__Ruta___5165187F" FromRole="Rutas" ToRole="Cargamentos" />
+          <NavigationProperty Name="Choferes" Relationship="Self.FK__Rutas__Chofer_ID__5441852A" FromRole="Rutas" ToRole="Choferes" />
+          <NavigationProperty Name="Direcciones" Relationship="Self.FK__Rutas__Direccion__571DF1D5" FromRole="Rutas" ToRole="Direcciones" />
+          <NavigationProperty Name="Direcciones1" Relationship="Self.FK__Rutas__Direccion__5812160E" FromRole="Rutas" ToRole="Direcciones" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Paterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Materno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Edad" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_Rutas">
+          <Key>
+            <PropertyRef Name="C_" />
+            <PropertyRef Name="ID_Cargamento" />
+            <PropertyRef Name="cargamento" />
+            <PropertyRef Name="ID_Direccion_Origen" />
+            <PropertyRef Name="Origen" />
+            <PropertyRef Name="Estado_Origen" />
+            <PropertyRef Name="ID_Direccion_Destino" />
+            <PropertyRef Name="Destino" />
+            <PropertyRef Name="Estado_Destino" />
+            <PropertyRef Name="ID_Chofer" />
+            <PropertyRef Name="Chofer" />
+            <PropertyRef Name="ID_Camion" />
+            <PropertyRef Name="Camión" />
+          </Key>
+          <Property Name="C_" Type="Int32" Nullable="false" />
+          <Property Name="ID_Cargamento" Type="Int32" Nullable="false" />
+          <Property Name="cargamento" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Direccion_Origen" Type="Int32" Nullable="false" />
+          <Property Name="Origen" Type="String" MaxLength="555" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado_Origen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Direccion_Destino" Type="Int32" Nullable="false" />
+          <Property Name="Destino" Type="String" MaxLength="555" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado_Destino" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Chofer" Type="Int32" Nullable="false" />
+          <Property Name="Chofer" Type="String" MaxLength="152" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Camion" Type="Int32" Nullable="false" />
+          <Property Name="Camión" Type="String" MaxLength="88" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salida" Type="DateTime" Precision="3" />
+          <Property Name="LLegada_Estimada" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Rutas__Camion_ID__4E88ABD4">
+          <End Role="Camiones" Type="Self.Camiones" Multiplicity="1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camiones">
+              <PropertyRef Name="ID_Camion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Camion_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargament__Ruta___5165187F">
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="1" />
+          <End Role="Cargamentos" Type="Self.Cargamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rutas">
+              <PropertyRef Name="ID_Ruta" />
+            </Principal>
+            <Dependent Role="Cargamentos">
+              <PropertyRef Name="Ruta_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Chofer_ID__5441852A">
+          <End Role="Choferes" Type="Self.Choferes" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choferes">
+              <PropertyRef Name="ID_Chofer" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Chofer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Direccion__571DF1D5">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Direccionorigen_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rutas__Direccion__5812160E">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
+            </Principal>
+            <Dependent Role="Rutas">
+              <PropertyRef Name="Direcciondestino_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TransportesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bitacora_camiones" EntityType="Self.bitacora_camiones" />
+          <EntitySet Name="Camiones" EntityType="Self.Camiones" />
+          <EntitySet Name="Cargamentos" EntityType="Self.Cargamentos" />
+          <EntitySet Name="Choferes" EntityType="Self.Choferes" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" />
+          <EntitySet Name="prueba" EntityType="Self.prueba" />
+          <EntitySet Name="Rutas" EntityType="Self.Rutas" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="View_Rutas" EntityType="Self.View_Rutas" />
+          <AssociationSet Name="FK__Rutas__Camion_ID__4E88ABD4" Association="Self.FK__Rutas__Camion_ID__4E88ABD4">
+            <End Role="Camiones" EntitySet="Camiones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargament__Ruta___5165187F" Association="Self.FK__Cargament__Ruta___5165187F">
+            <End Role="Rutas" EntitySet="Rutas" />
+            <End Role="Cargamentos" EntitySet="Cargamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Chofer_ID__5441852A" Association="Self.FK__Rutas__Chofer_ID__5441852A">
+            <End Role="Choferes" EntitySet="Choferes" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Direccion__571DF1D5" Association="Self.FK__Rutas__Direccion__571DF1D5">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rutas__Direccion__5812160E" Association="Self.FK__Rutas__Direccion__5812160E">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Rutas" EntitySet="Rutas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TransportesModelStoreContainer" CdmEntityContainer="TransportesEntities">
+          <EntitySetMapping Name="bitacora_camiones">
+            <EntityTypeMapping TypeName="TransportesModel.bitacora_camiones">
+              <MappingFragment StoreEntitySet="bitacora_camiones">
+                <ScalarProperty Name="ID_Bitacora" ColumnName="ID_Bitacora" />
+                <ScalarProperty Name="ID_Camion" ColumnName="ID_Camion" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Camiones">
+            <EntityTypeMapping TypeName="TransportesModel.Camiones">
+              <MappingFragment StoreEntitySet="Camiones">
+                <ScalarProperty Name="ID_Camion" ColumnName="ID_Camion" />
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="Tipo_Camion" ColumnName="Tipo_Camion" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Capacidad" ColumnName="Capacidad" />
+                <ScalarProperty Name="Kilometraje" ColumnName="Kilometraje" />
+                <ScalarProperty Name="UrlFoto" ColumnName="UrlFoto" />
+                <ScalarProperty Name="Disponibilidad" ColumnName="Disponibilidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargamentos">
+            <EntityTypeMapping TypeName="TransportesModel.Cargamentos">
+              <MappingFragment StoreEntitySet="Cargamentos">
+                <ScalarProperty Name="ID_Cargamento" ColumnName="ID_Cargamento" />
+                <ScalarProperty Name="Ruta_ID" ColumnName="Ruta_ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Choferes">
+            <EntityTypeMapping TypeName="TransportesModel.Choferes">
+              <MappingFragment StoreEntitySet="Choferes">
+                <ScalarProperty Name="ID_Chofer" ColumnName="ID_Chofer" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+                <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Licencia" ColumnName="Licencia" />
+                <ScalarProperty Name="UrlFoto" ColumnName="UrlFoto" />
+                <ScalarProperty Name="Disponibilidad" ColumnName="Disponibilidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direcciones">
+            <EntityTypeMapping TypeName="TransportesModel.Direcciones">
+              <MappingFragment StoreEntitySet="Direcciones">
+                <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="CP" ColumnName="CP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prueba">
+            <EntityTypeMapping TypeName="TransportesModel.prueba">
+              <MappingFragment StoreEntitySet="prueba">
+                <ScalarProperty Name="id_prueba" ColumnName="id_prueba" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rutas">
+            <EntityTypeMapping TypeName="TransportesModel.Rutas">
+              <MappingFragment StoreEntitySet="Rutas">
+                <ScalarProperty Name="ID_Ruta" ColumnName="ID_Ruta" />
+                <ScalarProperty Name="Camion_ID" ColumnName="Camion_ID" />
+                <ScalarProperty Name="Distancia" ColumnName="Distancia" />
+                <ScalarProperty Name="Fecha_salida" ColumnName="Fecha_salida" />
+                <ScalarProperty Name="Fecha_llegadaestimada" ColumnName="Fecha_llegadaestimada" />
+                <ScalarProperty Name="Fecha_llegadareal" ColumnName="Fecha_llegadareal" />
+                <ScalarProperty Name="Chofer_ID" ColumnName="Chofer_ID" />
+                <ScalarProperty Name="Direccionorigen_ID" ColumnName="Direccionorigen_ID" />
+                <ScalarProperty Name="Direcciondestino_ID" ColumnName="Direcciondestino_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TransportesModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="TransportesModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+                <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Rutas">
+            <EntityTypeMapping TypeName="TransportesModel.View_Rutas">
+              <MappingFragment StoreEntitySet="View_Rutas">
+                <ScalarProperty Name="C_" ColumnName="#" />
+                <ScalarProperty Name="ID_Cargamento" ColumnName="ID_Cargamento" />
+                <ScalarProperty Name="cargamento" ColumnName="cargamento" />
+                <ScalarProperty Name="ID_Direccion_Origen" ColumnName="ID_Direccion_Origen" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Estado_Origen" ColumnName="Estado_Origen" />
+                <ScalarProperty Name="ID_Direccion_Destino" ColumnName="ID_Direccion_Destino" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="Estado_Destino" ColumnName="Estado_Destino" />
+                <ScalarProperty Name="ID_Chofer" ColumnName="ID_Chofer" />
+                <ScalarProperty Name="Chofer" ColumnName="Chofer" />
+                <ScalarProperty Name="ID_Camion" ColumnName="ID_Camion" />
+                <ScalarProperty Name="Camión" ColumnName="Camión" />
+                <ScalarProperty Name="Salida" ColumnName="Salida" />
+                <ScalarProperty Name="LLegada_Estimada" ColumnName="LLegada Estimada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
